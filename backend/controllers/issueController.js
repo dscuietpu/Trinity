@@ -255,7 +255,7 @@ const deleteIssue = async (req, res) => {
       return sendError(res, 404, "Issue not found");
     }
 
-    if (issue.reportedBy.toString() !== req.user._id.toString()) {
+    if (issue.reportedBy.toString() !== req.user._id.toString() &&req.user.role !== "admin") {
       return sendError(res, 403, "Only the original reporter can delete this issue");
     }
 
