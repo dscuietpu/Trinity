@@ -47,7 +47,7 @@ const issueSchema = new mongoose.Schema(
     isFalseClaim: { type: Boolean, default: false },
     status: {
       type: String,
-      enum: ["Reported", "In Progress", "Resolved", "False Claim"],
+      enum: ["Reported", "In Progress", "Fixed", "Resolved", "False Claim"],
       default: "Reported",
     },
     adminNote: { type: String, default: "" },
