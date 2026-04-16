@@ -246,6 +246,27 @@ const resolveIssueByUser = async (req, res) => {
   }
 };
 
+const deleteIssue = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const issue = await Issue.findById(id);
+    if (!issue) {
+      return sendError(res, 404, "Issue not found");
+    }
+
+    if (issue.reportedBy.toString() !== req.user._id.toString()) {
+      return sendError(res, 403, "Only the original reporter can delete this issue");
+    }
+
+    await Issue.deleteOne({ _id: id });
+
+    return sendSuccess(res, 200, "Issue deleted successfully", null);
+  } catch (error) {
+    return sendError(res, 500, "Failed to delete issue");
+  }
+};
+
 module.exports = {
   createIssue,
   getIssues,
